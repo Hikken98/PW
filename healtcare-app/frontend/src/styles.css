@@ -1,52 +1,64 @@
-/* ---- Aurora UI (palette azzurri, responsive) ---- */
+/* =========================
+   Aurora UI – styles.css
+   ========================= */
+
+/* ---- Palette & tokens ---- */
 :root{
   --bg: #f6faff;
   --bg-grad-1: #eef6ff;
   --bg-grad-2: #f8fbff;
 
-  --primary-50: #e8f1ff;
-  --primary-100:#d4e7ff;
-  --primary-200:#b6d6ff;
-  --primary-300:#8cc0ff;
-  --primary-400:#5ca5ff;
-  --primary-500:#2b86ff;     /* colore principale */
-  --primary-600:#1f6fe3;
-  --primary-700:#1557c0;     /* accento/navy */
-  --primary-800:#0f4496;
+  --primary-50:  #e8f1ff;
+  --primary-100: #d4e7ff;
+  --primary-200: #b6d6ff;
+  --primary-300: #8cc0ff;
+  --primary-400: #5ca5ff;
+  --primary-500: #2b86ff;      /* main */
+  --primary-600: #1f6fe3;
+  --primary-700: #1557c0;      /* navy accent */
+  --primary-800: #0f4496;
 
-  --text: #0f172a;
-  --muted:#6b7280;
-  --card:#ffffff;
-  --border:#e5e7eb;
+  --text:   #0f172a;
+  --muted:  #6b7280;
+  --card:   #ffffff;
+  --border: #e5e7eb;
   --shadow: 0 8px 26px rgba(24,68,160,.08);
 
-  --radius: 16px;
+  --radius:    16px;
   --radius-sm: 12px;
 }
 
-/* background con sfumatura molto soft */
-html, body {
-  height: 100%;
-}
+html, body { height: 100%; }
+* { box-sizing: border-box; }
+
+/* ---- Background simmetrico + base text ---- */
 body{
-  margin:0;
-  color:var(--text);
+  margin: 0;
+  color: var(--text);
   background:
-    radial-gradient(1200px 700px at 20% -10%, var(--primary-50), transparent 60%),
-    radial-gradient(1000px 600px at 100% 0%, var(--bg-grad-1), transparent 50%),
+    radial-gradient(1200px 700px at 50% -10%, var(--primary-50), transparent 60%),
+    radial-gradient(1000px 600px at 50% 0%, var(--bg-grad-1), transparent 50%),
     linear-gradient(180deg, var(--bg-grad-2), var(--bg));
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 }
 
-/* container + header */
+#root { display: block; }
+.toolbar, .grid, .span-all, .card { width: 100%; }
+
+/* ---- Container centrato “vero” ---- */
+/* --- CONTAINER centrato classico --- */
 .container{
-  max-width: 1200px;
-  margin: 28px auto;
-  padding: 0 16px 60px;
+  max-width: 1280px;     /* prova 1200/1280/1320 finché ti piace */
+  width: 100%;
+  margin: 0 auto;        /* centra orizzontalmente */
+  padding: 28px 24px 60px; /* un po’ di aria ai lati */
 }
+
+
+/* ---- Header & brand ---- */
 .header{
   display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-  margin-bottom: 18px;
+  margin-bottom: 6px;
 }
 .brand{
   font-size: clamp(28px, 3.4vw, 44px);
@@ -58,38 +70,14 @@ body{
   color: transparent;
   margin: 0 0 6px 0;
 }
-.subtitle{
-  color: var(--muted);
-  margin-top: -6px;
+.subtitle{ color: var(--muted); margin-top: -6px; }
+.badge{
+  display:inline-block; padding:6px 10px; border-radius:999px;
+  background: #eaf2ff; color:#1649a6; font-weight:600; font-size:12px;
 }
+.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
 
-/* layout responsive a card */
-.grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-@media (max-width: 1000px){
-  .grid{ grid-template-columns: repeat(2,1fr); }
-}
-@media (max-width: 680px){
-  .grid{ grid-template-columns: 1fr; }
-}
-
-/* card */
-.card{
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 16px;
-}
-.card h2{
-  margin: 4px 0 12px;
-  font-size: 18px;
-}
-
-/* toolbar filtri */
+/* ---- Toolbar filtri ---- */
 .toolbar{
   display:flex; flex-wrap:wrap; gap:12px; align-items:center;
   background: var(--card);
@@ -97,22 +85,47 @@ body{
   border-radius: var(--radius);
   padding: 12px;
   box-shadow: var(--shadow);
-  margin-bottom: 18px;
+  margin: 12px 0 6px;
 }
+label{ display:flex; align-items:center; gap:8px; color:#334155; }
 
-/* inputs + select + button */
+/* ---- Layout grid (3 → 2 → 1) ---- */
+.grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+@media (max-width: 1000px){ .grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 680px){ .grid{ grid-template-columns: 1fr; } }
+
+/* card generiche */
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  display:flex; flex-direction:column;
+}
+.card h2{ margin: 4px 0 12px; font-size: 18px; }
+
+/* permette a una card (Agenda) di occupare tutta la riga della stessa grid */
+.span-all{ grid-column: 1 / -1; }
+
+/* ---- Inputs & Buttons ---- */
 input, select, button{
   font: inherit;
   border-radius: 12px;
   border: 1px solid var(--border);
   padding: 10px 12px;
   outline: none;
+  background: #fff;
 }
 input:focus, select:focus{
   border-color: var(--primary-400);
   box-shadow: 0 0 0 3px rgba(44, 116, 255, .15);
 }
-label{ display:flex; align-items:center; gap:8px; color:#334155; }
 
 .btn{
   cursor: pointer;
@@ -124,15 +137,24 @@ label{ display:flex; align-items:center; gap:8px; color:#334155; }
 }
 .btn:hover{ transform: translateY(-1px); box-shadow: 0 8px 20px rgba(43,134,255,.28); }
 .btn:active{ transform: translateY(0); }
-
 .btn-ghost{
   background: #fff;
   color: var(--primary-700);
   border: 1px solid var(--primary-200);
   box-shadow: none;
 }
+.table .btn-ghost{ padding: 6px 10px; border-radius: 10px; }
 
-/* tabelle */
+/* ---- Form layout ---- */
+.form{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.form .full{ grid-column: 1 / -1; }
+@media (max-width: 680px){ .form{ grid-template-columns: 1fr; } }
+
+/* ---- Tabelle ---- */
 .table{
   width:100%; border-collapse: collapse; overflow:hidden;
   border: 1px solid var(--border);
@@ -152,32 +174,5 @@ label{ display:flex; align-items:center; gap:8px; color:#334155; }
 }
 .table tbody tr:hover{ background: #f9fbff; }
 
-/* form blocchi */
-.form{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-.form .full{ grid-column: 1 / -1; }
-@media (max-width: 680px){
-  .form{ grid-template-columns: 1fr; }
-}
-
-/* footer badge (facoltativo) */
-.badge{
-  display:inline-block; padding:6px 10px; border-radius:999px;
-  background: #eaf2ff; color:#1649a6; font-weight:600; font-size:12px;
-}
-.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-
-/* ---- layout refinements ---- */
-.grid{ align-items: stretch; }
-.card{ display:flex; flex-direction:column; }
-.card .table{ flex:1; }
-
-/* allinea Agenda al grid superiore con stesso spacing */
-.section-agenda{ margin-top: 18px; }
-.section-agenda .card{ padding-top: 12px; }
-
-/* compact action buttons in tables */
-.table .btn-ghost{ padding: 6px 10px; border-radius: 10px; }
+/* ---- Utility ---- */
+.row{ display:flex; gap:12px; align-items:center; }
