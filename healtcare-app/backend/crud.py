@@ -76,3 +76,16 @@ def delete_appointment(db: Session, appt_id: int) -> bool:
         return False
     db.delete(obj); db.commit()
     return True
+
+def delete_patient(db: Session, patient_id: int) -> bool:
+    obj = db.get(models.Patient, patient_id)
+    if not obj: return False
+    db.delete(obj); db.commit()
+    return True
+
+def delete_doctor(db: Session, doctor_id: int) -> bool:
+    obj = db.get(models.Doctor, doctor_id)
+    if not obj: return False
+    db.delete(obj); db.commit()
+    return True
+

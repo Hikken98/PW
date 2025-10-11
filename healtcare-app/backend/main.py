@@ -32,6 +32,12 @@ def create_patient(payload: schemas.PatientCreate, db: Session = Depends(get_db)
 def get_patients(db: Session = Depends(get_db)):
     return crud.list_patients(db)
 
+@app.delete("/api/patients/{patient_id}", status_code=204)
+def remove_patient(patient_id: int, db: Session = Depends(get_db)):
+    ok = crud.delete_patient(db, patient_id)
+    if not ok:
+        raise HTTPException(status_code=404, detail="Patient not found")
+
 # Doctors
 @app.post("/api/doctors", response_model=schemas.DoctorOut, status_code=201)
 def create_doctor(payload: schemas.DoctorCreate, db: Session = Depends(get_db)):
@@ -40,6 +46,12 @@ def create_doctor(payload: schemas.DoctorCreate, db: Session = Depends(get_db)):
 @app.get("/api/doctors", response_model=list[schemas.DoctorOut])
 def get_doctors(db: Session = Depends(get_db)):
     return crud.list_doctors(db)
+
+@app.delete("/api/doctors/{doctor_id}", status_code=204)
+def remove_doctor(doctor_id: int, db: Session = Depends(get_db)):
+    ok = crud.delete_doctor(db, doctor_id)
+    if not ok:
+        raise HTTPException(status_code=404, detail="Doctor not found")
 
 # Appointments
 @app.post("/api/appointments", response_model=schemas.AppointmentOut, status_code=201)

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { getDoctors, getPatients, getAppointments, createAppointment, createPatient, createDoctor, deleteAppointment } from './api'
+import {
+  getDoctors, getPatients, getAppointments,
+  createAppointment, createPatient, createDoctor,
+  deleteAppointment, deletePatient, deleteDoctor   // <— AGGIUNTO
+} from './api'
 import AppointmentForm from './components/AppointmentForm'
 import PatientForm from './components/PatientForm'
 import DoctorForm from './components/DoctorForm'
@@ -64,42 +68,51 @@ export default function App(){
         <section className="card">
           <h2>Pazienti</h2>
           <PatientForm onCreate={async (p)=>{ try{ await createPatient(p); await reload(); } catch(e){ alert(e.message) } }} />
-          <List items={patients} columns={["id","last_name","first_name","email"]} />
+          <List
+            items={patients}
+            columns={["id","last_name","first_name","email"]}
+            onDelete={async (id)=>{ try{ await deletePatient(id); await reload(); } catch(e){ alert(e.message) } }}  // <— AGGIUNTO
+          />
         </section>
 
         <section className="card">
           <h2>Medici</h2>
           <DoctorForm onCreate={async (d)=>{ try{ await createDoctor(d); await reload(); } catch(e){ alert(e.message) } }} />
-          <List items={doctors} columns={["id","last_name","first_name","specialty"]} />
+          <List
+            items={doctors}
+            columns={["id","last_name","first_name","specialty"]}
+            onDelete={async (id)=>{ try{ await deleteDoctor(id); await reload(); } catch(e){ alert(e.message) } }}   // <— AGGIUNTO
+          />
         </section>
       </div>
 
-      <section className="card" style={{marginTop:18}}>
-        <h2>Agenda</h2>
-        <p style={{opacity:.7}}>Appuntamenti mostrati: {Array.isArray(appts) ? appts.length : 0}</p>
-        {/* Qui usi la tua tabella custom con nomi/id oppure List se preferisci */}
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Medico</th>
-              <th>Paziente</th>
-              <th>Data / Ora</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {(appts||[]).map(a=>(
-              <tr key={a.id}>
-                <td>{a.id}</td>
-                <td>{a.doctor_id} – {a.doctor_name}</td>
-                <td>{a.patient_id} – {a.patient_name}</td>
-                <td>{new Date(a.start_time).toLocaleString()}</td>
-                <td><button className="btn btn-ghost" onClick={async()=>{ await deleteAppointment(a.id); await reload(); }}>Elimina</button></td>
+      <section className="section-agenda">
+        <div className="card">
+          <h2>Agenda</h2>
+          <p style={{opacity:.7}}>Appuntamenti mostrati: {Array.isArray(appts) ? appts.length : 0}</p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Medico</th><th>Paziente</th><th>Data / Ora</th><th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {(appts||[]).map(a=>(
+                <tr key={a.id}>
+                  <td>{a.id}</td>
+                  <td>{a.doctor_id} – {a.doctor_name}</td>
+                  <td>{a.patient_id} – {a.patient_name}</td>
+                  <td>{new Date(a.start_time).toLocaleString()}</td>
+                  <td>
+                    <button className="btn btn-ghost" onClick={async()=>{ try{ await deleteAppointment(a.id); await reload(); } catch(e){ alert(e.message) } }}>
+                      Elimina
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   )

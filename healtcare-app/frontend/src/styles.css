@@ -169,3 +169,15 @@ label{ display:flex; align-items:center; gap:8px; color:#334155; }
   background: #eaf2ff; color:#1649a6; font-weight:600; font-size:12px;
 }
 .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+/* ---- layout refinements ---- */
+.grid{ align-items: stretch; }
+.card{ display:flex; flex-direction:column; }
+.card .table{ flex:1; }
+
+/* allinea Agenda al grid superiore con stesso spacing */
+.section-agenda{ margin-top: 18px; }
+.section-agenda .card{ padding-top: 12px; }
+
+/* compact action buttons in tables */
+.table .btn-ghost{ padding: 6px 10px; border-radius: 10px; }

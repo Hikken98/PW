@@ -73,3 +73,24 @@ export async function deleteAppointment(id) {
   }
   return true;
 }
+
+export async function deletePatient(id) {
+  const r = await fetch(`${API}/patients/${id}`, { method:'DELETE' });
+  if (!r.ok) {
+    let msg = 'Errore eliminazione paziente';
+    try { const e = await r.json(); msg = e.detail || JSON.stringify(e); } catch {}
+    throw new Error(msg);
+  }
+  return true;
+}
+
+export async function deleteDoctor(id) {
+  const r = await fetch(`${API}/doctors/${id}`, { method:'DELETE' });
+  if (!r.ok) {
+    let msg = 'Errore eliminazione medico';
+    try { const e = await r.json(); msg = e.detail || JSON.stringify(e); } catch {}
+    throw new Error(msg);
+  }
+  return true;
+}
+
