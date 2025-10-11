@@ -2,7 +2,7 @@ import React from 'react'
 export default function List({ items, columns, onDelete }) {
   const rows = Array.isArray(items) ? items : [];
   return (
-    <table>
+    <table className="table">
       <thead>
         <tr>
           {columns.map(c => <th key={c}>{c}</th>)}
@@ -13,7 +13,7 @@ export default function List({ items, columns, onDelete }) {
         {rows.map(row => (
           <tr key={row.id}>
             {columns.map(c => <td key={c}>{String(row[c] ?? '')}</td>)}
-            {onDelete && <td><button onClick={()=>onDelete(row.id)}>Elimina</button></td>}
+            {onDelete && <td><button className="btn btn-ghost" onClick={()=>onDelete(row.id)}>Elimina</button></td>}
           </tr>
         ))}
       </tbody>
