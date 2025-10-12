@@ -39,6 +39,7 @@ class AppointmentOut(BaseModel):
     doctor_id: int
     patient_id: int
     start_time: datetime
+    end_time: datetime
     doctor_name: str
     patient_name: str
 

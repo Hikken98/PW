@@ -44,7 +44,7 @@ export default function App(){
       <div className="header">
         <div>
           <h1 className="brand">Aurora – Prenotazioni</h1>
-          <div className="subtitle">MVP gestionale clinica • React + FastAPI</div>
+          <div className="subtitle"></div>
         </div>
         <span className="badge mono">v1.0</span>
       </div>
@@ -100,7 +100,7 @@ export default function App(){
           }} />
           <List
             items={patients}
-            columns={["id","last_name","first_name","email"]}
+            columns={["id","last_name","first_name","email", "phone"]}
             onDelete={async (id)=>{
               if(!confirm('Eliminare questo paziente? Verranno rimossi anche i suoi appuntamenti.')) return;
               try { await deletePatient(id); await reload(); }
