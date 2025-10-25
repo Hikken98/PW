@@ -9,7 +9,6 @@ import PatientForm from './components/PatientForm'
 import DoctorForm from './components/DoctorForm'
 import List from './components/List'
 
-// Formatter data/ora in italiano (gg/mm/aaaa hh:mm)
 const formatIT = (iso) =>
   new Date(iso).toLocaleString('it-IT', {
     day: '2-digit', month: '2-digit', year: 'numeric',
